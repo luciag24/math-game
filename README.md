@@ -1,6 +1,6 @@
 #  Matematická hra 
 
-Krásna, farebná, pekne vyzerajúca matematická hra... lneže má jeden malý problém.
+Krásna, farebná, pekne vyzerajúca matematická hra... lenže má jeden malý problém.
 Neviem je prepojiť s backendom 😄
 Ak si v API mág, pokojne sa na to pozri a oprav to!
 Inak si aspoň uži pohľad na pekné tlačidlá!
