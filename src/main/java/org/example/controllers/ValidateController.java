@@ -5,11 +5,20 @@ import org.springframework.web.bind.annotation.*;
 import org.example.models.AnswerRequest;
 import java.util.function.ToDoubleBiFunction;
 
-
+/**
+ * RestController pre validáciu odpovedí.
+ * Obsahuje endpoint na overenie správnosti odpovede.
+ */
 @RestController
 @RequestMapping("/api")
 public class ValidateController {
 
+    /**
+     * Overí, či je odpoveď správna.
+     *
+     * @param request Požiadavka obsahujúca odpoveď na validáciu.
+     * @return ResponseEntity so správou o správnostu odpovede.
+     */
     @PostMapping("/validate")
     public ResponseEntity<String> validateAnswer(@RequestBody AnswerRequest request) {
         TODO:
