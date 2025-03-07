@@ -1,13 +1,11 @@
 package org.example.models;
 
-import jakarta.persistence.*;
-import com.fasterxml.jackson.annotation.JsonTypeId;
-import jakarta.annotation.Generated;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
+import jakarta.persistence.Transient;
 /**
  * Entita predstavujúca matematický príklad v databáze.
  * Obsahuje text príkladu, správnu odpoveď, odpoveďpoužívateľa a informáciu o tom,
@@ -31,14 +29,15 @@ public class MathExample {
     private int userAnswer;
 
     /** Označuje, či je odpoveď používateľa správna. */
-        private boolean isCorrect;
+    private boolean isCorrect;
 
-    /**
-     * Bezparametrický konštruktor (potrebný pre JPA),
-     */
-    public MathExample() {
-            this.isCorrect = false;
-        }
+    /** Pole pro přenos dodatečných dat ve výsledku (není ukládáno do DB) */
+    @Transient
+    private boolean correct;
+
+
+   
+    
 
     /**
      * Konštruktor pre vytvorenie matematického príkladu.
@@ -118,13 +117,17 @@ public class MathExample {
 
     /**
      * Nastaví odpoveď zadanú používateľom a automaticky vyhodnotí, či je správna.
+     * OPRAVENO: Použije se přesnější porovnávání pro double hodnoty
      *
      * @param userAnswer Nová odpoveď používateľa.
      */
     public void setUserAnswer(int userAnswer) {
-            this.userAnswer = userAnswer;
-            this.isCorrect = (userAnswer == this.correctAnswer);
-        }
+        this.userAnswer = userAnswer;
+        
+        // Oprava porovnání s tolerancí pro desetinná čísla (0.1)
+        this.isCorrect = Math.abs(userAnswer - this.correctAnswer) < 0.1;
+        this.correct = this.isCorrect;
+    }
 
     /**
      * Zistí, či je odpoveď používateľa správna.
@@ -132,9 +135,38 @@ public class MathExample {
      * @return true, ak je odpoveď správna, inak false.
      */
     public boolean isCorrect() {
-            return isCorrect;
-        }
+        return isCorrect;
     }
 
+    /**
+     * Získá hodnotu pole correct pro JSON odpověď
+     * 
+     * @return Hodnota pole correct
+     */
+    public boolean isCorrect_() {
+        return correct;
+    }
 
+     /**
+     * Nastaví hodnotu pole correct
+     * 
+     * @param correct Nová hodnota pole correct
+     */
+    public void setCorrect(boolean correct) {
+        this.correct = correct;
+    }
+    
+
+    @Override
+    public String toString() {
+        return "MathExample{" +
+                "id=" + id +
+                ", question='" + question + '\'' +
+                ", correctAnswer=" + correctAnswer +
+                ", userAnswer=" + userAnswer +
+                ", isCorrect=" + isCorrect +
+                ", correct=" + correct +
+                '}';
+    }
+}
 

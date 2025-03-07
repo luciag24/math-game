@@ -1,35 +1,42 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="sk">
 <head>
     <meta charset="UTF-8">
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Matematická Aplikácia</title>
-        <link rel="stylesheet" href="/static/styles.css">
-        <script src="/static/js/app.js" defer></script>
-    </head>
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <script src="/static/js/app.js" defer></script>
+</head>
 
-    <body>
+<body>
     <h1>Matematická hra</h1>
+    
+    <div class="container">
         <!-- Výber ročníka -->
-    <label for="grade">Vyberte ročník</label>
+        <label for="grade">Vyberte ročník</label>
         <select id="grade" name="grade">
             <option value="1">1. ročník</option>
             <option value="2">2. ročník</option>
             <option value="3">3. ročník</option>
             <option value="4">4. ročník</option>
         </select>
-
-    <label for="answer">Zadajte odpoveď:</label>
-    <input type="text" id="answer" name="answer">
-
-    <div id="resultMessage"></div>
-    <div id="userAnswer"></div>
-    <div id="exampleText"></div>
-
-    <button id="next">Ďalší príklad</button>
-    <button id="generateExampleButton">Generovať príklad</button>
-    <button id="stopButton">Zastaviť</button>
-    </body>
+        
+        <!-- Zobrazenie príkladu -->
+        <div id="exampleText" class="example-text"></div>
+        
+        <!-- Zadávanie odpovede -->
+        <label for="answer">Zadajte odpoveď:</label>
+        <input type="number" id="answer" name="answer">
+        
+        <!-- Výsledková správa -->
+        <div id="resultMessage" class="result-message"></div>
+        
+        <!-- Tlačidlá -->
+        <div class="button-group">
+            <button id="generateExampleButton">Generovať príklad</button>
+            <button id="next">Kontrola odpovede</button>
+            <button id="stopButton">Zastaviť hru</button>
+        </div>
+    </div>
+</body>
 </html>
-
