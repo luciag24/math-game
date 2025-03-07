@@ -1,16 +1,13 @@
 package org.example.dto;
 
-import org.example.dto.MathExampleDTO;
-import org.example.mapper.MathExampleMapper;
-
 /**
- * Data Transfer Object (DTO) pre matematický príklad.
+ * Data Transfer Object (DTO) pro matematický príklad.
  * Používa sa na prenos údajov medzi frontend a backend aplikáciou.
  */
 public class MathExampleDTO {
     private String question;
     private double correctAnswer;
-    private int userAnswer;
+    private double userAnswer; // Změněno z int na double
 
     /**
      * Konštruktor pre MathExampleDTO.
@@ -19,7 +16,7 @@ public class MathExampleDTO {
      * @param correctAnswer Správna odpoveď na príklad.
      * @param userAnswer Odpoveď zadaná používateľom.
      */
-    public MathExampleDTO(String question, double correctAnswer, int userAnswer) {
+    public MathExampleDTO(String question, double correctAnswer, double userAnswer) {
         this.question = question;
         this.correctAnswer = correctAnswer;
         this.userAnswer = userAnswer;
@@ -66,7 +63,7 @@ public class MathExampleDTO {
      *
      * @return Odpoveď zadaná používateľom.
      */
-    public int getUserAnswer() {
+    public double getUserAnswer() {
         return userAnswer;
     }
 
@@ -75,7 +72,7 @@ public class MathExampleDTO {
      *
      * @param userAnswer Nová odpoveď zadaná používateľom.
      */
-    public void setUserAnswer(int userAnswer) {
+    public void setUserAnswer(double userAnswer) {
         this.userAnswer = userAnswer;
     }
 }

@@ -76,45 +76,45 @@ public class MathExampleService {
         int number1, number2;
         char operator = randomOperator(new char[]{'+', '-'});
 
-if (operator == '+') {
-    number1 = (int) (Math.random() * 100);
-    number2 = (int) (Math.random() * (100 - number1));
-} else {
-    number1 = (int) (Math.random() * 100);
-    number2 = (int) (Math.random() * number1 + 1);
+        if (operator == '+') {
+            number1 = (int) (Math.random() * 100);
+            number2 = (int) (Math.random() * (100 - number1));
+        } else {
+            number1 = (int) (Math.random() * 100);
+            number2 = (int) (Math.random() * number1 + 1);
 
         }
         int correctAnswer = calculateAnswer(number1, number2, operator);
-String question = number1 + " " + operator + " " + number2;
-return new MathExample(question, correctAnswer);
+        String question = number1 + " " + operator + " " + number2;
+        return new MathExample(question, correctAnswer);
     }
 
     public MathExample generateThirdGradeExample() {
         int number1, number2;
         char operator = randomOperator(new char[] {'+', '-', '*', '/'});
 
-if (operator == '*' || operator == '/') {
-    number1 = (int) (Math.random() * 10 + 1);
-    number2 = (int) (Math.random() * 10 + 1);
+        if (operator == '*' || operator == '/') {
+            number1 = (int) (Math.random() * 10 + 1);
+            number2 = (int) (Math.random() * 10 + 1);
 
-    if (operator == '/') {
-        number1 = number1 * number2;
-    }
-} else {
-    number1 = (int) (Math.random() * 10 + 1);
-    number2 = (int) (Math.random() * 10 + 1);
-}
-int correctAnswer = calculateAnswer(number1, number2, operator);
+            if (operator == '/') {
+                number1 = number1 * number2;
+            }
+        } else {
+            number1 = (int) (Math.random() * 10 + 1);
+            number2 = (int) (Math.random() * 10 + 1);
+        }
+        int correctAnswer = calculateAnswer(number1, number2, operator);
 
-if (operator == '-' && correctAnswer < 0) {
-    return generateThirdGradeExample();
-}
-String operatorSymbol = String.valueOf(operator);
-if (operator == '/') {
-    operatorSymbol = ":";
-}
-String question = number1 + " " + operatorSymbol + " " + number2;
-return new MathExample(question,correctAnswer);
+        if (operator == '-' && correctAnswer < 0) {
+            return generateThirdGradeExample();
+        }
+        String operatorSymbol = String.valueOf(operator);
+        if (operator == '/') {
+            operatorSymbol = ":";
+        }
+        String question = number1 + " " + operatorSymbol + " " + number2;
+        return new MathExample(question, correctAnswer);
 
 
     }
@@ -127,8 +127,6 @@ return new MathExample(question,correctAnswer);
         }
     }
 
-
-
     private MathExample generateUnitConversionExample() {
         String[] units = {"kilometers to meters", "meters to kilometers", "meters to centimeters", "centimeters to meters",
         "liters to mililiters", "milliliters to liters"};
@@ -138,26 +136,13 @@ return new MathExample(question,correctAnswer);
         double correctAnswer;
 
         switch (unit) {
-            case "kilometers to meters":
-                correctAnswer = number * 1000;
-                break;
-            case "meters to kilometers":
-                correctAnswer = number / 1000.0;
-                break;
-            case "meters to centimeters":
-                correctAnswer = number * 100;
-                break;
-            case "centimeters to meters":
-                correctAnswer =  number / 100.0;
-                break;
-            case "liters to milliliters":
-                correctAnswer = number * 1000;
-                break;
-            case "milliliters to liters":
-                correctAnswer = number / 1000.0;
-                    break;
-            default:
-                throw new IllegalArgumentException("unknown unit conversion: " + unit);
+            case "kilometers to meters" -> correctAnswer = number * 1000;
+            case "meters to kilometers" -> correctAnswer = number / 1000.0;
+            case "meters to centimeters" -> correctAnswer = number * 100;
+            case "centimeters to meters" -> correctAnswer =  number / 100.0;
+            case "liters to mililiters" -> correctAnswer = number * 1000;
+            case "milliliters to liters" -> correctAnswer = number / 1000.0;
+            default -> throw new IllegalArgumentException("unknown unit conversion: " + unit);
         }
         String question = "convert " + number + " " + unit;
         return new MathExample(question, correctAnswer);
@@ -179,20 +164,24 @@ return new MathExample(question,correctAnswer);
 
     private int calculateAnswer(int number1, int number2, char operator) {
         switch (operator) {
-            case '+':
+            case '+' -> {
                 return number1 + number2;
-            case '-':
+            }
+            case '-' -> {
                 return number1 - number2;
-            case '*':
+            }
+            case '*' -> {
                 return number1 * number2;
-            case '/':
-                return number2 != 0 ? number1 / number2 :0;
-            default:
-                throw new IllegalArgumentException("Unknown operator: " + operator);
+            }
+            case '/' -> {
+                return number2 != 0 ? number1 / number2 : 0;
+            }
+            default -> throw new IllegalArgumentException("Unknown operator: " + operator);
         }
     }
 
-    public MathExample analyzeAnswer(MathExample example, int userAnswer) {
+    // Upravená metoda na přijímání double místo int
+    public MathExample analyzeAnswer(MathExample example, double userAnswer) {
         example.setUserAnswer(userAnswer);
         if (example.isCorrect()) {
             userProgress.incrementCorrectAnswers();
@@ -209,6 +198,6 @@ return new MathExample(question,correctAnswer);
         int correctAnswers = userProgress.getCorrectAnswers();
         int incorrectAnswers = userProgress.getIncorrectAnswers();
         int totalQuestions = correctAnswers + incorrectAnswers;
-        return "Správne odpovede:" + correctAnswers + "/" + totalQuestions + "Ďakujeme, že ste sa hrali!";
+        return "Správne odpovede: " + correctAnswers + "/" + totalQuestions + " Ďakujeme, že ste sa hrali!";
     }
 }

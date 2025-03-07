@@ -26,7 +26,7 @@ public class MathExample {
     private double correctAnswer;
 
     /** Odpoveď zadaná používateľom. */
-    private int userAnswer;
+    private double userAnswer;
 
     /** Označuje, či je odpoveď používateľa správna. */
     private boolean isCorrect;
@@ -111,7 +111,7 @@ public class MathExample {
      *
      * @return odpoveď používateľa.
      */
-    public int getUserAnswer() {
+    public double getUserAnswer() {
             return userAnswer;
         }
 
@@ -121,7 +121,7 @@ public class MathExample {
      *
      * @param userAnswer Nová odpoveď používateľa.
      */
-    public void setUserAnswer(int userAnswer) {
+    public void setUserAnswer(double userAnswer) {
         this.userAnswer = userAnswer;
         
         // Oprava porovnání s tolerancí pro desetinná čísla (0.1)

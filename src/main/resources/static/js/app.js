@@ -52,25 +52,43 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Kontrola odpovědi
     nextButton.addEventListener('click', () => {
-        const answer = userAnswer.value;
+        const answerValue = userAnswer.value;
         
         if (!currentExample) {
             resultMessage.innerText = 'Nejprve vygenerujte příklad!';
             return;
         }
         
-        if (answer) {
-            // Výpis pro debugging
+        if (answerValue) {
+            // Převod na float s kontrolou formátu
+            let parsedAnswer;
+            
+            // Nahrazení čárky tečkou (pokud uživatel zadá čárku)
+            const normalizedAnswer = answerValue.replace(',', '.');
+            
+            // Pokus o převod na float
+            parsedAnswer = parseFloat(normalizedAnswer);
+            
+            // Debugování
             console.log("Aktuální příklad:", currentExample);
             console.log("Očekávaná odpověď:", currentExample.correctAnswer);
-            console.log("Uživatelská odpověď:", answer);
+            console.log("Uživatelská odpověď (text):", answerValue);
+            console.log("Uživatelská odpověď (normalizovaná):", normalizedAnswer);
+            console.log("Uživatelská odpověď (parsovaná):", parsedAnswer);
+            
+            // Kontrola, zda se parsování povedlo
+            if (isNaN(parsedAnswer)) {
+                resultMessage.innerText = 'Zadejte platné číslo!';
+                resultMessage.style.color = '#dc3545';
+                return;
+            }
             
             // Vytvoření objektu pro odeslání
             const requestData = {
                 id: currentExample.id,
                 question: currentExample.question,
                 correctAnswer: currentExample.correctAnswer,
-                userAnswer: parseInt(answer)
+                userAnswer: parsedAnswer  // Použití parsované hodnoty
             };
             
             console.log("Odesílaná data:", requestData);
@@ -102,7 +120,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     resultMessage.style.color = '#dc3545';
                 }
             })
-            .catch(error => console.error('Chyba pri overovaní odpovede:', error));
+            .catch(error => {
+                console.error('Chyba pri overovaní odpovede:', error);
+                resultMessage.innerText = 'Chyba při kontrole odpovědi. Zkuste to znovu.';
+                resultMessage.style.color = '#dc3545';
+            });
         } else {
             resultMessage.innerText = 'Zadajte odpoveď pred kontrolou!';
         }

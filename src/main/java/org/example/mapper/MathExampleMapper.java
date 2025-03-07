@@ -29,14 +29,15 @@ public class MathExampleMapper {
     /**
      * Konvertuje DTO MathExampleDTO na entitu MathExample.
      *
-     * @param dto Inštancia triedy MathExampleDTO-
+     * @param dto Inštancia triedy MathExampleDTO.
      * @return Entita MathExample pripravená na uloženie do databázy.
      */
     public static MathExample toEntity(MathExampleDTO dto) {
-        return new MathExample(
+        MathExample example = new MathExample(
                 dto.getQuestion(),
                 dto.getCorrectAnswer()
         );
+        example.setUserAnswer(dto.getUserAnswer());
+        return example;
     }
-
 }

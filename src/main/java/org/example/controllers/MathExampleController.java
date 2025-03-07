@@ -45,8 +45,10 @@ public class MathExampleController {
         System.out.println("HTTP Method: Post");
         System.out.println("Received request: " + example);
         
-        if (example == null || example.getUserAnswer() == 0) {
-            throw new IllegalArgumentException("User answer is missing!");
+        // OPRAVENO: Odstraněna kontrola na example.getUserAnswer() == 0
+        // Nula může být legitimní odpověď, zejména u desetinných čísel
+        if (example == null) {
+            throw new IllegalArgumentException("Request is missing!");
         }
         
         // Debugging informace
@@ -57,6 +59,7 @@ public class MathExampleController {
         boolean isCorrect = Math.abs(example.getUserAnswer() - example.getCorrectAnswer()) < 0.1;
         System.out.println("Je odpověď správná? " + isCorrect);
         
+        // Zde používáme double místo int pro userAnswer
         MathExample result = mathExampleService.analyzeAnswer(example, example.getUserAnswer());
         
         // Přidáme vlastnost 'correct' pro frontend
