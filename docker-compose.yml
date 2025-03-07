@@ -1,0 +1,42 @@
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: math-game-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: math_game
+    ports:
+      - "3307:3306"  # Mapování na port 3307 kvůli lokálnímu MySQL na 3306
+    volumes:
+      - mysql-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-proot"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - math-game-network
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.simple  # Použití zjednodušeného Dockerfile
+    container_name: math-game-app
+    depends_on:
+      mysql:
+        condition: service_healthy
+    ports:
+      - "8090:8090"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/math_game?createDatabaseIfNotExist=true&useSSL=false
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+    networks:
+      - math-game-network
+
+networks:
+  math-game-network:
+    driver: bridge
+
+volumes:
+  mysql-data:

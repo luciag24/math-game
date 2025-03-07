@@ -1,0 +1,28 @@
+# Maven build files
+target/
+!target/DetApp-1.0-SNAPSHOT.jar
+
+# IDE directories
+.idea/
+.vscode/
+*.iml
+*.iws
+*.ipr
+.classpath
+.project
+.settings/
+
+# Logs
+*.log
+
+# Git directory
+.git/
+.gitignore
+
+# Docker files (no need to copy these into the image)
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# Other
+.DS_Store
